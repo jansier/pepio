@@ -31,8 +31,8 @@ function preload ()
     this.load.image('ground2', 'assets/plat2.png');
     this.load.image('star', 'assets/star.png');
     this.load.image('bomb', 'assets/bomb.png');
-    this.load.spritesheet('dude', 'assets/hulk.png', { frameWidth: 32, frameHeight: 38 });
-    this.load.multiatlas('scene', 'assets/hulk.json', 'assets');
+    this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 38 });
+    this.load.multiatlas('scene', 'assets/rengar.json', 'assets');
 }
 
 
@@ -55,27 +55,27 @@ function create ()
     player.setBounce(0.25);
     player.setCollideWorldBounds(true);
 
-    this.anims.create({
-        key: 'left',
-        frames: this.anims.generateFrameNames('scene', {
-                    start: 1, end: 6, zeroPad: 1,
-                    prefix: 'walk/', suffix: '.png',
-        }),
-        frameRate: 10,
-        repeat: -1
-    });
+    // this.anims.create({
+    //     key: 'left',
+    //     frames: this.anims.generateFrameNames('scene', {
+    //                 start: 1, end: 6, zeroPad: 1,
+    //                 prefix: 'walk/', suffix: '.png',
+    //     }),
+    //     frameRate: 10,
+    //     repeat: -1
+    // });
 
     this.anims.create({
         key: 'turn',
-        frames: [ {key: "scene", frame: "walk/1.png"} ],
+        frames: [ {key: "scene", frame: "Bieg/1.png"} ],
         frameRate: 20
     });
 
     this.anims.create({
-        key: 'right',
+        key: 'left',
         frames: this.anims.generateFrameNames('scene', {
-                    start: 1, end: 6, zeroPad: 1,
-                    prefix: 'walk/', suffix: '.png'
+                    start: 1, end: 4, zeroPad: 1,
+                    prefix: 'Bieg/', suffix: '.png'
         }),
         frameRate: 10,
         repeat: -1
@@ -121,15 +121,15 @@ function update ()
     {
         player.setVelocityX(-160);
 
-        player.flipX = true;
-        player.anims.play('right', true);
+        player.flipX = false;
+        player.anims.play('left', true);
     }
     else if (cursors.right.isDown)
     {
         player.setVelocityX(160);
 
-        player.flipX = false;
-        player.anims.play('right', true);
+        player.flipX = true;
+        player.anims.play('left', true);
     }
     else
     {
