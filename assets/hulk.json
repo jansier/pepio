@@ -1,0 +1,146 @@
+{
+	"textures": [
+		{
+			"image": "hulk.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 278,
+				"h": 54
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "walk/1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 33,
+						"h": 53
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 33,
+						"h": 53
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 33,
+						"h": 53
+					}
+				},
+				{
+					"filename": "walk/2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 56,
+						"h": 52
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 56,
+						"h": 52
+					},
+					"frame": {
+						"x": 33,
+						"y": 0,
+						"w": 56,
+						"h": 52
+					}
+				},
+				{
+					"filename": "walk/3.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 42,
+						"h": 54
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 42,
+						"h": 54
+					},
+					"frame": {
+						"x": 89,
+						"y": 0,
+						"w": 42,
+						"h": 54
+					}
+				},
+				{
+					"filename": "walk/4.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 44,
+						"h": 53
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 44,
+						"h": 53
+					},
+					"frame": {
+						"x": 131,
+						"y": 0,
+						"w": 44,
+						"h": 53
+					}
+				},
+				{
+					"filename": "walk/5.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 55,
+						"h": 51
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 55,
+						"h": 51
+					},
+					"frame": {
+						"x": 175,
+						"y": 0,
+						"w": 55,
+						"h": 51
+					}
+				},
+				{
+					"filename": "walk/6.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 48,
+						"h": 53
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 48,
+						"h": 53
+					},
+					"frame": {
+						"x": 230,
+						"y": 0,
+						"w": 48,
+						"h": 53
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:8b49f94f6a3dfed2c6ee64fc43dfaf49:4e0be3be9fe93ce8b6853766ad4b794f:ecf2b99472b86fa3501fee4d9c7b7a69$"
+	}
+}
