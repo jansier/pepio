@@ -26,56 +26,42 @@ var gameOver = false;
 
 function preload ()
 {
-    this.load.image('sky', 'assets/sky.jpg');
-    this.load.image('ground', 'assets/plat1.png');
-    this.load.image('ground2', 'assets/plat2.png');
-    this.load.image('star', 'assets/star.png');
-    this.load.image('bomb', 'assets/bomb.png');
-    this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 38 });
-    this.load.multiatlas('scene', 'assets/rengar.json', 'assets');
+    this.load.multiatlas('scene', 'assets/scene.json', 'assets');
 }
 
+let player, player2;
+let p = 'hulk';
 
 function create ()
 {
-    this.add.image(config.width/2, config.height/2, 'sky');
+    this.add.image(config.width/2, config.height/2, key='scene', frame='sky.png');
     
     platforms = this.physics.add.staticGroup();
-    platforms.create(W/2, 650, 'ground').setScale(6).refreshBody();
+    platforms.create(W/2, 650, key='scene', frame='plat1.png').setScale(6).refreshBody();
     
-    platforms.create(W/2, H/2, 'ground');
-    platforms.create(W*5/6, H/3, 'ground');
-    platforms.create(W/5, H/4, 'ground');
-    platforms.create(W/3*2, H*2/3+10, 'ground2');
-    platforms.create(W/20, H*5/7, 'ground2');
+    platforms.create(W/2, H/2, key='scene', frame='plat1.png');
+    platforms.create(W*5/6, H/3, key='scene', frame='plat1.png');
+    platforms.create(W/5, H/4, key='scene', frame='plat1.png');
+    platforms.create(W/3*2, H*2/3+10, key='scene', frame='plat2.png');
+    platforms.create(W/20, H*5/7, key='scene', frame='plat2.png');
     
     
-    player = this.physics.add.sprite(W/2, H/2, 'dude');
+    player = this.physics.add.sprite(W/2, H/2, key= "scene", frame= p+"/walk/1.png");
 
     player.setBounce(0.25);
     player.setCollideWorldBounds(true);
 
-    // this.anims.create({
-    //     key: 'left',
-    //     frames: this.anims.generateFrameNames('scene', {
-    //                 start: 1, end: 6, zeroPad: 1,
-    //                 prefix: 'walk/', suffix: '.png',
-    //     }),
-    //     frameRate: 10,
-    //     repeat: -1
-    // });
-
     this.anims.create({
         key: 'turn',
-        frames: [ {key: "scene", frame: "Bieg/1.png"} ],
+        frames: [ {key: "scene", frame: p+"/walk/1.png"} ],
         frameRate: 20
     });
 
     this.anims.create({
-        key: 'left',
+        key: 'walk',
         frames: this.anims.generateFrameNames('scene', {
                     start: 1, end: 4, zeroPad: 1,
-                    prefix: 'Bieg/', suffix: '.png'
+                    prefix: p+'/walk/', suffix: '.png'
         }),
         frameRate: 10,
         repeat: -1
@@ -86,15 +72,14 @@ function create ()
     cursors = this.input.keyboard.createCursorKeys();
     
     stars = this.physics.add.group({
-        key: 'star',
+        key: 'scene',
+        frame: 'star.png',
         repeat: 39,
         setXY: { x: 12, y: 0, stepX: 20 }
     });
 
     stars.children.iterate(function (child) {
-
         child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.7));
-
     });
     
     bombs = this.physics.add.group();
@@ -121,15 +106,15 @@ function update ()
     {
         player.setVelocityX(-160);
 
-        player.flipX = false;
-        player.anims.play('left', true);
+        player.flipX = true;
+        player.anims.play('walk', true);
     }
     else if (cursors.right.isDown)
     {
         player.setVelocityX(160);
 
-        player.flipX = true;
-        player.anims.play('left', true);
+        player.flipX = false;
+        player.anims.play('walk', true);
     }
     else
     {
@@ -166,7 +151,8 @@ function update ()
 
         var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0,     400);
 
-        var bomb = bombs.create(x, 16, 'bomb');
+        var bomb = bombs.create(x, 16, key= 'scene',frame= 'bomb.png');
+
         bomb.setBounce(1);
         bomb.setCollideWorldBounds(true);
         bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);

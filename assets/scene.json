@@ -1,0 +1,566 @@
+{
+	"textures": [
+		{
+			"image": "scene.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 959,
+				"h": 602
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "sky.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 800,
+						"h": 600
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 800,
+						"h": 600
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 800,
+						"h": 600
+					}
+				},
+				{
+					"filename": "plat1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 141,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 141,
+						"h": 32
+					},
+					"frame": {
+						"x": 803,
+						"y": 1,
+						"w": 141,
+						"h": 32
+					}
+				},
+				{
+					"filename": "rengar/attack/2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 96,
+						"h": 63
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 96,
+						"h": 63
+					},
+					"frame": {
+						"x": 803,
+						"y": 35,
+						"w": 96,
+						"h": 63
+					}
+				},
+				{
+					"filename": "rengar/walk/1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 57,
+						"h": 52
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 57,
+						"h": 52
+					},
+					"frame": {
+						"x": 901,
+						"y": 35,
+						"w": 57,
+						"h": 52
+					}
+				},
+				{
+					"filename": "hulk/walk/2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 56,
+						"h": 52
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 56,
+						"h": 52
+					},
+					"frame": {
+						"x": 901,
+						"y": 89,
+						"w": 56,
+						"h": 52
+					}
+				},
+				{
+					"filename": "rengar/attack/3.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 92,
+						"h": 53
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 92,
+						"h": 53
+					},
+					"frame": {
+						"x": 803,
+						"y": 100,
+						"w": 92,
+						"h": 53
+					}
+				},
+				{
+					"filename": "rengar/walk/3.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 61,
+						"h": 51
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 61,
+						"h": 51
+					},
+					"frame": {
+						"x": 897,
+						"y": 143,
+						"w": 61,
+						"h": 51
+					}
+				},
+				{
+					"filename": "plat2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 80,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 80,
+						"h": 32
+					},
+					"frame": {
+						"x": 803,
+						"y": 155,
+						"w": 80,
+						"h": 32
+					}
+				},
+				{
+					"filename": "rengar/jump/up.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 77,
+						"h": 80
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 77,
+						"h": 80
+					},
+					"frame": {
+						"x": 803,
+						"y": 189,
+						"w": 77,
+						"h": 80
+					}
+				},
+				{
+					"filename": "rengar/walk/4.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 74,
+						"h": 53
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 74,
+						"h": 53
+					},
+					"frame": {
+						"x": 882,
+						"y": 196,
+						"w": 74,
+						"h": 53
+					}
+				},
+				{
+					"filename": "rengar/walk/2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 72,
+						"h": 59
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 72,
+						"h": 59
+					},
+					"frame": {
+						"x": 882,
+						"y": 251,
+						"w": 72,
+						"h": 59
+					}
+				},
+				{
+					"filename": "rengar/jump/down.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 77,
+						"h": 79
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 77,
+						"h": 79
+					},
+					"frame": {
+						"x": 803,
+						"y": 271,
+						"w": 77,
+						"h": 79
+					}
+				},
+				{
+					"filename": "rengar/stay/2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 70,
+						"h": 45
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 70,
+						"h": 45
+					},
+					"frame": {
+						"x": 882,
+						"y": 312,
+						"w": 70,
+						"h": 45
+					}
+				},
+				{
+					"filename": "hulk/attack/hit.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 68,
+						"h": 50
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 68,
+						"h": 50
+					},
+					"frame": {
+						"x": 803,
+						"y": 352,
+						"w": 68,
+						"h": 50
+					}
+				},
+				{
+					"filename": "rengar/stay/1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 66,
+						"h": 56
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 66,
+						"h": 56
+					},
+					"frame": {
+						"x": 873,
+						"y": 359,
+						"w": 66,
+						"h": 56
+					}
+				},
+				{
+					"filename": "rengar/attack/4.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 66,
+						"h": 41
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 66,
+						"h": 41
+					},
+					"frame": {
+						"x": 803,
+						"y": 404,
+						"w": 66,
+						"h": 41
+					}
+				},
+				{
+					"filename": "bomb.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 14,
+						"h": 14
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 14,
+						"h": 14
+					},
+					"frame": {
+						"x": 941,
+						"y": 359,
+						"w": 14,
+						"h": 14
+					}
+				},
+				{
+					"filename": "hulk/walk/5.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 55,
+						"h": 51
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 55,
+						"h": 51
+					},
+					"frame": {
+						"x": 871,
+						"y": 417,
+						"w": 55,
+						"h": 51
+					}
+				},
+				{
+					"filename": "hulk/jump/up.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 30,
+						"h": 63
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 30,
+						"h": 63
+					},
+					"frame": {
+						"x": 928,
+						"y": 417,
+						"w": 30,
+						"h": 63
+					}
+				},
+				{
+					"filename": "rengar/attack/1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 54,
+						"h": 62
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 54,
+						"h": 62
+					},
+					"frame": {
+						"x": 803,
+						"y": 447,
+						"w": 54,
+						"h": 62
+					}
+				},
+				{
+					"filename": "hulk/walk/6.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 48,
+						"h": 53
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 48,
+						"h": 53
+					},
+					"frame": {
+						"x": 859,
+						"y": 470,
+						"w": 48,
+						"h": 53
+					}
+				},
+				{
+					"filename": "hulk/walk/4.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 44,
+						"h": 53
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 44,
+						"h": 53
+					},
+					"frame": {
+						"x": 909,
+						"y": 482,
+						"w": 44,
+						"h": 53
+					}
+				},
+				{
+					"filename": "hulk/jump/down.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 41,
+						"h": 60
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 41,
+						"h": 60
+					},
+					"frame": {
+						"x": 803,
+						"y": 537,
+						"w": 41,
+						"h": 60
+					}
+				},
+				{
+					"filename": "star.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 24,
+						"h": 22
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 24,
+						"h": 22
+					},
+					"frame": {
+						"x": 803,
+						"y": 511,
+						"w": 24,
+						"h": 22
+					}
+				},
+				{
+					"filename": "hulk/walk/3.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 42,
+						"h": 54
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 42,
+						"h": 54
+					},
+					"frame": {
+						"x": 846,
+						"y": 537,
+						"w": 42,
+						"h": 54
+					}
+				},
+				{
+					"filename": "hulk/walk/1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 33,
+						"h": 53
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 33,
+						"h": 53
+					},
+					"frame": {
+						"x": 890,
+						"y": 537,
+						"w": 33,
+						"h": 53
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:eedebd245a94ef50b59c98c6ae498eef:70e65dbd1f37fc89edbcd4c151cbb53b:b5ae526252a9bb5f811c6329b74d8d84$"
+	}
+}
