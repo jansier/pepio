@@ -31,6 +31,7 @@ function preload ()
 
 let player, player2;
 let p = 'hulk';
+let pflip = false;
 
 function create ()
 {
@@ -65,6 +66,16 @@ function create ()
         }),
         frameRate: 10,
         repeat: -1
+    });
+    this.anims.create({
+        key: 'up',
+        frames: [ {key: "scene", frame: p+"/jump/up.png"} ],
+        frameRate: 20,
+    });
+    this.anims.create({
+        key: 'down',
+        frames: [ {key: "scene", frame: p+"/jump/down.png"} ],
+        frameRate: 20,
     });
     
     
@@ -102,26 +113,29 @@ function update ()
     {
         return;
     }
+
     if (cursors.left.isDown)
     {
         player.setVelocityX(-160);
-
-        player.flipX = true;
-        player.anims.play('walk', true);
+        player.flipX = !pflip;
     }
     else if (cursors.right.isDown)
     {
         player.setVelocityX(160);
-
-        player.flipX = false;
-        player.anims.play('walk', true);
+        player.flipX = pflip;
     }
     else
     {
         player.setVelocityX(0);
-
-        player.anims.play('turn');
     }
+    if (Math.abs(player.body.velocity.y) < 5 && player.body.velocity.x == 0){
+        player.anims.play('turn', true);
+    } else if (player.body.velocity.y < -100)
+        player.anims.play('up', true);
+    else if(player.body.velocity.y > 100)
+        player.anims.play('down', true);
+    else
+        player.anims.play('walk', true);
     
     if (cursors.up.isDown && player.body.touching.down)
     {
