@@ -17,11 +17,15 @@ var config = {
     },
 };
 var platforms;
-var score = 0;
-var scoreText;
+var scorep1 = 0;
+var scorep2 = 0;
+var scoreTextp1;
+var scoreTextp2;
 var jumped = !true;
 var cursors;
 var gameOver = false;
+var p1LastHit = new Date();
+var p2LastHit = new Date();
 var createConfig = {
     'rengar' : {
         name: 'rengar',
@@ -71,7 +75,8 @@ function create ()
         p2up: 'w',
         p2left: 'a',
         p2right: 'd',
-        p2attack: 'space'
+        p2attack: 'space',
+        restart: 'shift'
     });
     
     
@@ -88,7 +93,8 @@ function create ()
     
     bombs = this.physics.add.group();
     
-    scoreText = this.add.text(16, 16, 'Punkty: 0', { fontSize: '32px', fill: '#FFF' });
+    scoreTextp1 = this.add.text(16, 16, 'Gracz 1: 0', { fontSize: '32px', fill: '#FFF' });
+    scoreTextp2 = this.add.text(600, 16, 'Gracz 2: 0', { fontSize: '32px', fill: '#FFF' });
 
     this.physics.add.collider(player, platforms);
     this.physics.add.collider(player2, platforms);
@@ -108,6 +114,10 @@ function create ()
 
 function update ()
 {
+    if(cursors.restart.isDown) {
+       this.scene.restart();
+    }
+
     if (gameOver)
     {
         return;
@@ -117,12 +127,19 @@ handleEvents(player, createConfig[p1], cursors.p1left.isDown, cursors.p1right.is
 handleEvents(player2, createConfig[p2], cursors.p2left.isDown, cursors.p2right.isDown, cursors.p2up.isDown, cursors.p2attack.isDown)
 }
 
- function collectStar (player, star)
+ function collectStar (p, star)
 {
     star.disableBody(true, true);
     
-    score += 1;
-    scoreText.setText('Punkty: ' + score)
+    if (p == player){
+        scorep1 += 1;
+        scoreTextp1.setText('Gracz 1: ' + scorep1)
+    } 
+    else {
+        scorep2 += 1;
+        scoreTextp2.setText('Gracz 2: ' + scorep2)
+    }
+    
     if (stars.countActive(true) === 0)
     {
         stars.children.iterate(function (child) {
@@ -131,7 +148,7 @@ handleEvents(player2, createConfig[p2], cursors.p2left.isDown, cursors.p2right.i
 
         });
 
-        var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0,     400);
+        var x = (p.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0,     400);
 
         var bomb = bombs.create(x, 16, key= 'scene',frame= 'bomb.png');
 
@@ -220,6 +237,35 @@ function handleEvents (p, creatureConfig, left, right, up, attack){
 
     if (attack){
         p.anims.play(creatureConfig.name + 'attack', true);
+        if(p == player) {
+            if(p.y <= (player2.y+30) && p.y >= (player2.y-30))
+            {
+                if(p.x <= player2.x + 60)
+                {
+                    if(scorep2 > 0 && (new Date() - p2LastHit) > 1000)
+                    {
+                        p2LastHit = new Date();
+                        scorep2 -= 1;
+                        scoreTextp2.setText('Gracz 2: ' + scorep2)
+                    }
+                } 
+            }
+        } else {
+            if(p.y <= (player.y+30) && p.y >= (player.y-30))
+            {
+                if(p.x <= player.x + 60)
+                {
+                    if(scorep1 > 0 && (new Date() - p1LastHit) > 1000)
+                    {
+                        p1LastHit = new Date();
+                        scorep1 -= 1;
+                        scoreTextp1.setText('Gracz 1: ' + scorep1)
+                    }
+                }
+            } 
+        }
+
+
     } else if (Math.abs(p.body.velocity.y) < 5 && p.body.velocity.x == 0){
         p.anims.play(creatureConfig.name + 'turn', true);
     } else if (p.body.velocity.y < -100)
@@ -240,5 +286,6 @@ function handleEvents (p, creatureConfig, left, right, up, attack){
         jumped = !false;
     }
 }
+
 
 var game = new Phaser.Game(config);
