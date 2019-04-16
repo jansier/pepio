@@ -22,6 +22,19 @@ var scoreText;
 var jumped = !true;
 var cursors;
 var gameOver = false;
+var createConfig = {
+    'rengar' : {
+        name: 'rengar',
+        flip: 1,
+        hitFramesCount: 4
+    },
+    'hulk' : {
+        name: 'hulk',
+        flip: 0,
+        hitFramesCount: 1
+    }
+
+}
 
 
 function preload ()
@@ -30,8 +43,8 @@ function preload ()
 }
 
 let player, player2;
-let p = 'hulk';
-let pflip = false;
+let p1 = 'rengar';
+let p2 = 'hulk';
 
 function create ()
 {
@@ -47,40 +60,20 @@ function create ()
     platforms.create(W/20, H*5/7, key='scene', frame='plat2.png');
     
     
-    player = this.physics.add.sprite(W/2, H/2, key= "scene", frame= p+"/walk/1.png");
+    player = generatePlayer(this, {w : W/4*3, h : H/2}, p2);
+    player2 = generatePlayer(this, {w : W/4, h : H/2}, p1);
 
-    player.setBounce(0.25);
-    player.setCollideWorldBounds(true);
-
-    this.anims.create({
-        key: 'turn',
-        frames: [ {key: "scene", frame: p+"/walk/1.png"} ],
-        frameRate: 20
-    });
-
-    this.anims.create({
-        key: 'walk',
-        frames: this.anims.generateFrameNames('scene', {
-                    start: 1, end: 4, zeroPad: 1,
-                    prefix: p+'/walk/', suffix: '.png'
-        }),
-        frameRate: 10,
-        repeat: -1
-    });
-    this.anims.create({
-        key: 'up',
-        frames: [ {key: "scene", frame: p+"/jump/up.png"} ],
-        frameRate: 20,
-    });
-    this.anims.create({
-        key: 'down',
-        frames: [ {key: "scene", frame: p+"/jump/down.png"} ],
-        frameRate: 20,
+    cursors = this.input.keyboard.addKeys({
+        p1up: 'up',
+        p1left: 'left',
+        p1right: 'right',
+        p1attack: 'enter',
+        p2up: 'w',
+        p2left: 'a',
+        p2right: 'd',
+        p2attack: 'space'
     });
     
-    
-
-    cursors = this.input.keyboard.createCursorKeys();
     
     stars = this.physics.add.group({
         key: 'scene',
@@ -98,12 +91,18 @@ function create ()
     scoreText = this.add.text(16, 16, 'Punkty: 0', { fontSize: '32px', fill: '#FFF' });
 
     this.physics.add.collider(player, platforms);
+    this.physics.add.collider(player2, platforms);
     this.physics.add.collider(stars, platforms);
     this.physics.add.collider(bombs, platforms);
+    
 
     this.physics.add.overlap(player, stars, collectStar, null, this);
 
     this.physics.add.collider(player, bombs, hitBomb, null, this);
+
+    this.physics.add.overlap(player2, stars, collectStar, null, this);
+
+    this.physics.add.collider(player2, bombs, hitBomb, null, this);
 }
 
 
@@ -114,39 +113,8 @@ function update ()
         return;
     }
 
-    if (cursors.left.isDown)
-    {
-        player.setVelocityX(-160);
-        player.flipX = !pflip;
-    }
-    else if (cursors.right.isDown)
-    {
-        player.setVelocityX(160);
-        player.flipX = pflip;
-    }
-    else
-    {
-        player.setVelocityX(0);
-    }
-    if (Math.abs(player.body.velocity.y) < 5 && player.body.velocity.x == 0){
-        player.anims.play('turn', true);
-    } else if (player.body.velocity.y < -100)
-        player.anims.play('up', true);
-    else if(player.body.velocity.y > 100)
-        player.anims.play('down', true);
-    else
-        player.anims.play('walk', true);
-    
-    if (cursors.up.isDown && player.body.touching.down)
-    {
-        player.setVelocityY(-330);
-        jumped = false;
-    }
-    else if (cursors.up.isDown && !jumped && Math.abs(player.body.velocity.y) < 100)
-    {
-        player.setVelocityY(-330);
-        jumped = !false;
-    }
+handleEvents(player, createConfig[p1], cursors.p1left.isDown, cursors.p1right.isDown, cursors.p1up.isDown, cursors.p1attack.isDown)
+handleEvents(player2, createConfig[p2], cursors.p2left.isDown, cursors.p2right.isDown, cursors.p2up.isDown, cursors.p2attack.isDown)
 }
 
  function collectStar (player, star)
@@ -184,6 +152,93 @@ function hitBomb (player, bomb)
     player.anims.play('turn');
 
     gameOver = true;
+}
+
+function generatePlayer(g, pos, creatureName){
+
+    let creature = g.physics.add.sprite(pos.w, pos.h, key= "scene", frame= creatureName+"/walk/1.png");
+
+    creature.setBounce(0.25);
+    creature.setCollideWorldBounds(true);
+
+    g.anims.create({
+        key: creatureName+ 'turn',
+        frames: [ {key: "scene", frame: creatureName+"/walk/1.png"} ],
+        frameRate: 20
+    });
+
+    g.anims.create({
+        key: creatureName+ 'walk',
+        frames: g.anims.generateFrameNames('scene', {
+                    start: 1, end: 4, zeroPad: 1,
+                    prefix: creatureName+'/walk/', suffix: '.png'
+        }),
+        frameRate: 10,
+        repeat: -1
+    });
+    g.anims.create({
+        key: creatureName+ 'up',
+        frames: [ {key: "scene", frame: creatureName+"/jump/up.png"} ],
+        frameRate: 20,
+    });
+    g.anims.create({
+        key: creatureName+ 'down',
+        frames: [ {key: "scene", frame: creatureName+"/jump/down.png"} ],
+        frameRate: 20,
+    });
+    g.anims.create({
+        key: creatureName+ 'attack',
+        frames: g.anims.generateFrameNames('scene', {
+            start: 1, end: createConfig[creatureName].hitFramesCount, zeroPad: 1,
+            prefix: creatureName+'/attack/', suffix: '.png'
+        }),
+            frameRate: 10,
+            repeat: -1
+        
+    });
+
+    return creature;
+
+}
+
+function handleEvents (p, creatureConfig, left, right, up, attack){
+
+    if (left)
+    {
+        p.setVelocityX(-160);
+        p.flipX = !creatureConfig.flip;
+    }
+    else if (right)
+    {
+        p.setVelocityX(160);
+        p.flipX = creatureConfig.flip;
+    }
+    else
+    {
+        p.setVelocityX(0);
+    }
+
+    if (attack){
+        p.anims.play(creatureConfig.name + 'attack', true);
+    } else if (Math.abs(p.body.velocity.y) < 5 && p.body.velocity.x == 0){
+        p.anims.play(creatureConfig.name + 'turn', true);
+    } else if (p.body.velocity.y < -100)
+        p.anims.play(creatureConfig.name + 'up', true);
+    else if(p.body.velocity.y > 100)
+        p.anims.play(creatureConfig.name + 'down', true);
+    else
+        p.anims.play(creatureConfig.name + 'walk', true);
+    
+    if (up && p.body.touching.down)
+    {
+        p.setVelocityY(-330);
+        jumped = false;
+    }
+    else if (up && !jumped && Math.abs(p.body.velocity.y) < 100)
+    {
+        p.setVelocityY(-330);
+        jumped = !false;
+    }
 }
 
 var game = new Phaser.Game(config);
