@@ -29,6 +29,7 @@ var p1LastHit = new Date();
 var p2LastHit = new Date();
 var p1Alive = true;
 var p2Alive = true;
+var scoreSend = false;
 
 var createConfig = {
     'rengar' : {
@@ -49,7 +50,6 @@ var createConfig = {
     }
 
 }
-
 
 function preload ()
 {
@@ -85,9 +85,9 @@ function create ()
         p2left: 'a',
         p2right: 'd',
         p2attack: 'space',
-        restart: 'tab'
+        restart: 'tab',
+        stars: 'p'
     });
-    
     
     stars = this.physics.add.group({
         key: 'scene',
@@ -111,12 +111,13 @@ function create ()
     this.physics.add.collider(player2, player);
     this.physics.add.collider(stars, platforms);
     this.physics.add.collider(bombs, platforms);
-    
 
     this.physics.add.overlap(player, stars, collectStar, null, this);
     this.physics.add.collider(player, bombs, hitBomb, null, this);
     this.physics.add.overlap(player2, stars, collectStar, null, this);
     this.physics.add.collider(player2, bombs, hitBomb, null, this);
+
+    scoreSend = false;
 }
 
 
@@ -124,6 +125,16 @@ function update ()
 {
     if(cursors.restart.isDown) {
        this.scene.restart();
+    }
+    if(cursors.stars.isDown) {
+        stars.children.iterate(function (child) {
+            child.enableBody(true, child.x, 0, true, true);
+        });
+
+        p1Alive = true;
+        p2Alive = true;
+        player.setTint(0xffffff);
+        player2.setTint(0xffffff);
     }
 
     if ($("textarea").is(":focus")) {
@@ -158,9 +169,7 @@ function collectStar (p, star)
     if (stars.countActive(true) === 0)
     {
         stars.children.iterate(function (child) {
-
             child.enableBody(true, child.x, 0, true, true);
-
         });
 
         p1Alive = true;
@@ -187,14 +196,17 @@ function hitBomb (p, bomb)
     }
 
     gameOver = true;
-            
-    window.socket.emit('data', {
-        action: 'gameOver',
-        name: window.playerName,
-        score: scorep1+scorep2
-    })
-    newScore(window.playerName, scorep1+scorep2);
-    
+        
+    if (!scoreSend) {
+        window.socket.emit('data', {
+            action: 'gameOver',
+            name: window.playerName,
+            score: scorep1+scorep2
+        })
+        newScore(window.playerName, scorep1+scorep2);
+        scoreSend = true;
+    }
+
     if(!p1Alive && p2Alive) {
         this.physics.pause();
     }
