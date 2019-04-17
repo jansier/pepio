@@ -15,6 +15,7 @@ var config = {
             debug: false
         }
     },
+    parent: 'game',
 };
 var platforms;
 var scorep1 = 0;
