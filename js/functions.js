@@ -82,7 +82,9 @@ function joinGame() {
         return;
     }
     runGame();
-    $( "#name-form" ).remove();
+    $( "#name-form" ).hide();
     	
     $( "#messages" ).show();
+    
+    $( "#join-game" ).remove();
 }
