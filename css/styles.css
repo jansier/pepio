@@ -1,11 +1,14 @@
 body {
-    background: black;
+    background:black;
 }
 #container{
-    width: 90%;
-    max-width: 300px;
-    margin: 10px auto;
-    padding: 10px;
-    border-radius: 10px;
-   
+    width: 1000px;
+    margin: 0 auto;
+}
+#game, #rightpanel{
+    display: inline-block;
+
+}
+#rightpanel{
+    background: red;
 }

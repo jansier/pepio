@@ -15,6 +15,7 @@ var config = {
             debug: false
         }
     },
+    parent: 'game',
 };
 var platforms;
 var scorep1 = 0;
@@ -26,16 +27,21 @@ var cursors;
 var gameOver = false;
 var p1LastHit = new Date();
 var p2LastHit = new Date();
+
 var createConfig = {
     'rengar' : {
         name: 'rengar',
         flip: 1,
-        hitFramesCount: 4
+        hitFramesCount: 4,
+        speed: 300,
+        hitBombs: false
     },
     'hulk' : {
         name: 'hulk',
         flip: 0,
-        hitFramesCount: 1
+        hitFramesCount: 1,
+        speed: 150,
+        hitBombs: true
     }
 
 }
@@ -123,8 +129,8 @@ function update ()
         return;
     }
 
-handleEvents(player, createConfig[p1], cursors.p1left.isDown, cursors.p1right.isDown, cursors.p1up.isDown, cursors.p1attack.isDown)
-handleEvents(player2, createConfig[p2], cursors.p2left.isDown, cursors.p2right.isDown, cursors.p2up.isDown, cursors.p2attack.isDown)
+    handleEvents(player, createConfig[p1], cursors.p1left.isDown, cursors.p1right.isDown, cursors.p1up.isDown, cursors.p1attack.isDown)
+    handleEvents(player2, createConfig[p2], cursors.p2left.isDown, cursors.p2right.isDown, cursors.p2up.isDown, cursors.p2attack.isDown)
 }
 
  function collectStar (p, star)
@@ -222,12 +228,12 @@ function handleEvents (p, creatureConfig, left, right, up, attack){
 
     if (left)
     {
-        p.setVelocityX(-160);
+        p.setVelocityX(-creatureConfig.speed);
         p.flipX = !creatureConfig.flip;
     }
     else if (right)
     {
-        p.setVelocityX(160);
+        p.setVelocityX(creatureConfig.speed);
         p.flipX = creatureConfig.flip;
     }
     else
@@ -265,6 +271,18 @@ function handleEvents (p, creatureConfig, left, right, up, attack){
             } 
         }
 
+        if(creatureConfig.hitBombs)
+        {
+            for(let i in bombs.children.entries)
+            {
+                let bomb = bombs.children.entries[i];
+                if(inHitArea(p, bomb))
+                {
+                    bomb.disableBody(true, true);
+                }
+            }
+        }
+
 
     } else if (Math.abs(p.body.velocity.y) < 5 && p.body.velocity.x == 0){
         p.anims.play(creatureConfig.name + 'turn', true);
@@ -285,6 +303,18 @@ function handleEvents (p, creatureConfig, left, right, up, attack){
         p.setVelocityY(-330);
         jumped = !false;
     }
+}
+
+function inHitArea(creature, target)
+{
+    if(creature.y <= (target.y+30) && creature.y >= (target.y-30))
+    {
+        if(creature.x <= target.x + 90)
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 
