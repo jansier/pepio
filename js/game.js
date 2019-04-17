@@ -140,7 +140,7 @@ function update ()
     
 }
 
- function collectStar (p, star)
+function collectStar (p, star)
 {
     star.disableBody(true, true);
     
@@ -174,6 +174,13 @@ function hitBomb (player, bomb)
     player.anims.play('turn');
 
     gameOver = true;
+            
+    window.socket.emit('data', {
+        action: 'gameOver',
+        name: window.playerName,
+        score: scorep1+scorep2
+    })
+    newScore(window.playerName, scorep1+scorep2);
 }
 
 function generatePlayer(g, pos, creatureName){
@@ -239,7 +246,7 @@ function handleEvents (p, creatureConfig, left, right, up, attack){
         p.setVelocityX(0);
     }
 
-    if (attack){
+    if (attack) {
         p.anims.play(creatureConfig.name + 'attack', true);
         if(p == player) {
             if(p.y <= (player2.y+30) && p.y >= (player2.y-30))

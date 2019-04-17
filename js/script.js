@@ -19,10 +19,10 @@ socket.on('disconnect', function() {
 
 socket.on('data', function(data) {
     if (data.action === "message") {
-        
         if (!data.name || !data.msg) return
-        
         newMsg(data.name, data.msg, false, data.color);
+    } else if (data.action === "gameOver") {
+        newScore(data.name, data.score);
     }
 })
 $('#msg').keyup(function(event) {

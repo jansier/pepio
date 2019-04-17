@@ -72,8 +72,17 @@ function joinGame() {
     runGame();
     $( "#welcome" ).html("Witaj " + name + "");
     $( "#name-form" ).hide();
-    	
     $( "#messages" ).show();
-
     $( "#join-game" ).remove();
+    
+    window.playerName = name;
+}
+
+/* Add score to score */
+function newScore(name, score) {
+    var html = `
+        <div class="score">${sanitize(name)} - ${sanitize(score)} pkt</div>
+    `;
+    var $el = $(html)
+    $('#scores').append($el);
 }
