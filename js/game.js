@@ -27,7 +27,8 @@ var cursors;
 var gameOver = false;
 var p1LastHit = new Date();
 var p2LastHit = new Date();
-
+var p1Alive = true;
+var p2Alive = true;
 var createConfig = {
     'rengar' : {
         name: 'rengar',
@@ -84,11 +85,11 @@ function create ()
         p2left: 'a',
         p2right: 'd',
         p2attack: 'space',
-        restart: 'tab'
+        restart: 'tab',
+        p1InVis: 'alt'
     });
-    
-    
-    stars = this.physics.add.group({
+
+        stars = this.physics.add.group({
         key: 'scene',
         frame: 'star.png',
         repeat: 39,
@@ -96,7 +97,7 @@ function create ()
     });
 
     stars.children.iterate(function (child) {
-        child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.7));
+    child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.7));
     });
     
     bombs = this.physics.add.group();
@@ -126,13 +127,15 @@ function update ()
        this.scene.restart();
     }
 
-    if (gameOver)
+    if(p1Alive)
     {
-        return;
-    }
+        handleEvents(player, createConfig[p1], cursors.p1left.isDown, cursors.p1right.isDown, cursors.p1up.isDown, cursors.p1attack.isDown, cursors.p1InVis.isDown)
 
-    handleEvents(player, createConfig[p1], cursors.p1left.isDown, cursors.p1right.isDown, cursors.p1up.isDown, cursors.p1attack.isDown)
-    handleEvents(player2, createConfig[p2], cursors.p2left.isDown, cursors.p2right.isDown, cursors.p2up.isDown, cursors.p2attack.isDown)
+    }
+    if(p2Alive)
+    {
+        handleEvents(player2, createConfig[p2], cursors.p2left.isDown, cursors.p2right.isDown, cursors.p2up.isDown, cursors.p2attack.isDown )
+    }
 }
 
  function collectStar (p, star)
@@ -148,13 +151,16 @@ function update ()
         scoreTextp2.setText('Gracz 2: ' + scorep2)
     }
     
-    if (stars.countActive(true) === 0)
+    if (stars.countActive(true) == 0)
     {
         stars.children.iterate(function (child) {
 
-            child.enableBody(true, child.x, 0, true, true);
-
+         child.enableBody(true, child.x, 0, true, true);
         });
+
+
+        p1Alive = true;
+        p2Alive = true;
 
         var x = (p.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0,     400);
 
@@ -168,15 +174,24 @@ function update ()
     }
 }
 
-function hitBomb (player, bomb)
+function hitBomb (p, bomb)
 {
-    this.physics.pause();
+    p.setTint(0xff0000);
 
-    player.setTint(0xff0000);
+    p.anims.play('turn');
+    
+    if(p == player)
+    {
+        p1Alive = false;
+    } else 
+    {
+        p2Alive = false;
+    }
 
-    player.anims.play('turn');
-
-    gameOver = true;
+    if(p1Alive == false && p2Alive == false)
+    {
+        this.physics.pause();
+    }
 }
 
 function generatePlayer(g, pos, creatureName){
@@ -226,7 +241,7 @@ function generatePlayer(g, pos, creatureName){
 
 }
 
-function handleEvents (p, creatureConfig, left, right, up, attack){
+function handleEvents (p, creatureConfig, left, right, up, attack, inVis){
 
     if (left)
     {
@@ -304,6 +319,14 @@ function handleEvents (p, creatureConfig, left, right, up, attack){
     {
         p.setVelocityY(-creatureConfig.jump);
         jumped = !false;
+    }
+    if (inVis)
+    {
+        p.setTint (0xffffff)
+        p.visible = false;
+    } else 
+    {
+        p.visible = true;
     }
 }
 
