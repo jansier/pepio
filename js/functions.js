@@ -12,7 +12,7 @@ function sanitize(txt) {
     })
 }
 /* Create and add a new message */
-function newMsg(name, msg, isMine = false, color = "red") {
+function newMsg(name, msg, isMine = false, color = "white") {
     var html = `
         <div class="msg">
             <h6>${sanitize(name)}</h6>
@@ -48,9 +48,7 @@ function sendMsg() {
         return
     }
 
-    $('#msg').val('')
-
-    color = randomColor()
+    $('#msg').val('');
 
     window.socket.emit('data', {
         action: 'message',
@@ -62,19 +60,6 @@ function sendMsg() {
     newMsg(name, msg, true, color);
 }
 
-function randomColor() {
-    var seed = Math.random() * 1000000
-    return "#" + (seed ^ 0xFFFFFF).toString(16)
-}
-
-function createPix(x, y, color) {
-    var html = `<div class="pix" 
-        style="left: ${x}px;
-        top: ${y}px;
-        background: ${color}"></div>`
-
-    $('body').append(html);
-}
 function joinGame() {
     var name = $('#nickname').val();
     if (!name) {
@@ -82,7 +67,10 @@ function joinGame() {
         return;
     }
     runGame();
-    $( "#name-form" ).remove();
+    $( "#welcome" ).html("Witaj " + name + "");
+    $( "#name-form" ).hide();
     	
     $( "#messages" ).show();
+
+    $( "#join-game" ).remove();
 }
