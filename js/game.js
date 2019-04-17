@@ -84,7 +84,7 @@ function create ()
         p2left: 'a',
         p2right: 'd',
         p2attack: 'space',
-        restart: 'shift'
+        restart: 'tab'
     });
     
     
