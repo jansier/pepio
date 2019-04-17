@@ -72,7 +72,6 @@ function create ()
     platforms.create(W/3*2, H*2/3+10, key='scene', frame='plat2.png');
     platforms.create(W/20, H*5/7, key='scene', frame='plat2.png');
     
-    
     player = generatePlayer(this, {w : W/4*3, h : H/2}, p2);
     player2 = generatePlayer(this, {w : W/4, h : H/2}, p1);
 
@@ -101,22 +100,21 @@ function create ()
     });
     
     bombs = this.physics.add.group();
+    createBomb();
     
     scoreTextp1 = this.add.text(16, 16, 'Gracz 1: 0', { fontSize: '32px', fill: '#FFF' });
     scoreTextp2 = this.add.text(600, 16, 'Gracz 2: 0', { fontSize: '32px', fill: '#FFF' });
 
     this.physics.add.collider(player, platforms);
     this.physics.add.collider(player2, platforms);
+    this.physics.add.collider(player2, player);
     this.physics.add.collider(stars, platforms);
     this.physics.add.collider(bombs, platforms);
     
 
     this.physics.add.overlap(player, stars, collectStar, null, this);
-
     this.physics.add.collider(player, bombs, hitBomb, null, this);
-
     this.physics.add.overlap(player2, stars, collectStar, null, this);
-
     this.physics.add.collider(player2, bombs, hitBomb, null, this);
 }
 
@@ -127,18 +125,23 @@ function update ()
        this.scene.restart();
     }
 
+    if ($("textarea").is(":focus")) {
+        this.input.keyboard.enabled = false;
+    } else {
+        this.input.keyboard.enabled = true;
+    }
+
     if(p1Alive)
     {
         handleEvents(player, createConfig[p1], cursors.p1left.isDown, cursors.p1right.isDown, cursors.p1up.isDown, cursors.p1attack.isDown, cursors.p1InVis.isDown)
-
     }
     if(p2Alive)
     {
-        handleEvents(player2, createConfig[p2], cursors.p2left.isDown, cursors.p2right.isDown, cursors.p2up.isDown, cursors.p2attack.isDown )
+        handleEvents(player2, createConfig[p2], cursors.p2left.isDown, cursors.p2right.isDown, cursors.p2up.isDown, cursors.p2attack.isDown)
     }
 }
 
- function collectStar (p, star)
+function collectStar (p, star)
 {
     star.disableBody(true, true);
     
@@ -158,19 +161,12 @@ function update ()
          child.enableBody(true, child.x, 0, true, true);
         });
 
-
         p1Alive = true;
         p2Alive = true;
+        player.setTint(0xffffff);
+        player2.setTint(0xffffff);
 
-        var x = (p.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0,     400);
-
-        var bomb = bombs.create(x, 16, key= 'scene',frame= 'bomb.png');
-
-        bomb.setBounce(1);
-        bomb.setCollideWorldBounds(true);
-        bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
-        bomb.allowGravity = !false;
-
+        createBomb();
     }
 }
 
@@ -179,17 +175,25 @@ function hitBomb (p, bomb)
     p.setTint(0xff0000);
 
     p.anims.play('turn');
-    
+
     if(p == player)
     {
         p1Alive = false;
-    } else 
-    {
+    }
+    else {
         p2Alive = false;
     }
 
-    if(p1Alive == false && p2Alive == false)
-    {
+    gameOver = true;
+            
+    window.socket.emit('data', {
+        action: 'gameOver',
+        name: window.playerName,
+        score: scorep1+scorep2
+    })
+    newScore(window.playerName, scorep1+scorep2);
+    
+    if(!p1Alive && !p2Alive) {
         this.physics.pause();
     }
 }
@@ -258,7 +262,7 @@ function handleEvents (p, creatureConfig, left, right, up, attack, inVis){
         p.setVelocityX(0);
     }
 
-    if (attack){
+    if (attack) {
         p.anims.play(creatureConfig.name + 'attack', true);
         if(p == player) {
             if(p.y <= (player2.y+30) && p.y >= (player2.y-30))
@@ -340,6 +344,16 @@ function inHitArea(creature, target)
         }
     }
     return false;
+}
+
+function createBomb()
+{
+    var bomb = bombs.create(400, 16, key= 'scene',frame= 'bomb.png');
+
+    bomb.setBounce(1);
+    bomb.setCollideWorldBounds(true);
+    bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
+    bomb.allowGravity = !false;
 }
 
 function runGame() {

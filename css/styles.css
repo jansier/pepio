@@ -38,8 +38,15 @@ body {
 .msg p, .msg h6 {
     margin: 1px;
 }
+#scoreboard {
+    color: white;
+}
+#scores {
+    height: 200px;
+    overflow-y: scroll;
+}
 #msgs {
-    height: 500px;
+    height: 300px;
     overflow-y: scroll;
 }
 textarea, #send {
@@ -53,4 +60,11 @@ textarea, #send {
 #join-button {
     width: 100%;
 
+}
+.score {
+    color: black; 
+    background: white;
+    border-radius: 5px;
+    padding: 3px;
+    margin: 5px;
 }

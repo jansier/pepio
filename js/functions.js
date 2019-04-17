@@ -51,6 +51,7 @@ function sendMsg() {
     }
 
     $('#msg').val('');
+    $('#msg').blur();
 
     window.socket.emit('data', {
         action: 'message',
@@ -68,11 +69,26 @@ function joinGame() {
         alert('Hey you forgot your name.');
         return;
     }
-    runGame();
+    runGame();    
+    window.socket.emit('data', {
+        action: 'message',
+        name:"Serwer",
+        msg: "Gracz "+ name +" dołączył do gry",
+        color: "white"
+    })
     $( "#welcome" ).html("Witaj " + name + "");
     $( "#name-form" ).hide();
-    	
     $( "#messages" ).show();
-
     $( "#join-game" ).remove();
+    
+    window.playerName = name;
+}
+
+/* Add score to score */
+function newScore(name, score) {
+    var html = `
+        <div class="score">${sanitize(name)} - ${sanitize(score)} pkt</div>
+    `;
+    var $el = $(html)
+    $('#scores').append($el);
 }

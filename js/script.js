@@ -3,13 +3,6 @@ window.socket = io('https://pchat.day4.live');
 socket.on('connect', function() {
     newMsg('SERVER', 'Connected', true);
     socket.emit('token', 'qwerty');
-    window.socket.emit('data', {
-        action: 'message',
-        name:"Serwer",
-        msg: "Gracz "+$('#nickname').val()+" dołączył do gry",
-        color: $('#color').val()
-
-    })
 })
 
 socket.on('disconnect', function() {
@@ -19,10 +12,10 @@ socket.on('disconnect', function() {
 
 socket.on('data', function(data) {
     if (data.action === "message") {
-        
         if (!data.name || !data.msg) return
-        
         newMsg(data.name, data.msg, false, data.color);
+    } else if (data.action === "gameOver") {
+        newScore(data.name, data.score);
     }
 })
 $('#msg').keyup(function(event) {
@@ -30,3 +23,10 @@ $('#msg').keyup(function(event) {
         sendMsg();
     }
 })
+$(document).click(function(event) { 
+    $target = $(event.target);
+    console.log($target.closest('#msg'))
+    if(!$target.closest('#msg').length) {
+        $('#msg').blur();
+    }
+});
