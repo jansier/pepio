@@ -20,9 +20,11 @@ function newMsg(name, msg, isMine = false, color = "white") {
         </div>
     `;
     var $el = $(html)
-
+    if(color == '#000000'){
+        $el.css('color',  'white')
+    }
+    
     $el.css('background', color)
-
     if (isMine) $el.addClass('mine');
     
     $('#msgs').append($el);
