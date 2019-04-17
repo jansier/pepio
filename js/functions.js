@@ -69,7 +69,13 @@ function joinGame() {
         alert('Hey you forgot your name.');
         return;
     }
-    runGame();
+    runGame();    
+    window.socket.emit('data', {
+        action: 'message',
+        name:"Serwer",
+        msg: "Gracz "+ name +" dołączył do gry",
+        color: "white"
+    })
     $( "#welcome" ).html("Witaj " + name + "");
     $( "#name-form" ).hide();
     $( "#messages" ).show();

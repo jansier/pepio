@@ -27,6 +27,8 @@ var cursors;
 var gameOver = false;
 var p1LastHit = new Date();
 var p2LastHit = new Date();
+var p1Alive = true;
+var p2Alive = true;
 
 var createConfig = {
     'rengar' : {
@@ -99,22 +101,21 @@ function create ()
     });
     
     bombs = this.physics.add.group();
+    createBomb();
     
     scoreTextp1 = this.add.text(16, 16, 'Gracz 1: 0', { fontSize: '32px', fill: '#FFF' });
     scoreTextp2 = this.add.text(600, 16, 'Gracz 2: 0', { fontSize: '32px', fill: '#FFF' });
 
     this.physics.add.collider(player, platforms);
     this.physics.add.collider(player2, platforms);
+    this.physics.add.collider(player2, player);
     this.physics.add.collider(stars, platforms);
     this.physics.add.collider(bombs, platforms);
     
 
     this.physics.add.overlap(player, stars, collectStar, null, this);
-
     this.physics.add.collider(player, bombs, hitBomb, null, this);
-
     this.physics.add.overlap(player2, stars, collectStar, null, this);
-
     this.physics.add.collider(player2, bombs, hitBomb, null, this);
 }
 
@@ -125,19 +126,20 @@ function update ()
        this.scene.restart();
     }
 
-    if (gameOver)
-    {
-        return;
-    }
-
     if ($("textarea").is(":focus")) {
         this.input.keyboard.enabled = false;
     } else {
         this.input.keyboard.enabled = true;
     }
-    handleEvents(player, createConfig[p1], cursors.p1left.isDown, cursors.p1right.isDown, cursors.p1up.isDown, cursors.p1attack.isDown)
-    handleEvents(player2, createConfig[p2], cursors.p2left.isDown, cursors.p2right.isDown, cursors.p2up.isDown, cursors.p2attack.isDown)
-    
+
+    if(p1Alive)
+    {
+        handleEvents(player, createConfig[p1], cursors.p1left.isDown, cursors.p1right.isDown, cursors.p1up.isDown, cursors.p1attack.isDown)
+    }
+    if(p2Alive)
+    {
+        handleEvents(player2, createConfig[p2], cursors.p2left.isDown, cursors.p2right.isDown, cursors.p2up.isDown, cursors.p2attack.isDown)
+    }
 }
 
 function collectStar (p, star)
@@ -159,19 +161,30 @@ function collectStar (p, star)
 
             child.enableBody(true, child.x, 0, true, true);
 
-        })
+        });
 
-        createBomb([player.x, player2.x]);
+        p1Alive = true;
+        p2Alive = true;
+        player.setTint(0xffffff);
+        player2.setTint(0xffffff);
+
+        createBomb();
     }
 }
 
-function hitBomb (player, bomb)
+function hitBomb (p, bomb)
 {
-    this.physics.pause();
+    p.setTint(0xff0000);
 
-    player.setTint(0xff0000);
+    p.anims.play('turn');
 
-    player.anims.play('turn');
+    if(p == player)
+    {
+        p1Alive = false;
+    }
+    else {
+        p2Alive = false;
+    }
 
     gameOver = true;
             
@@ -181,6 +194,10 @@ function hitBomb (player, bomb)
         score: scorep1+scorep2
     })
     newScore(window.playerName, scorep1+scorep2);
+    
+    if(!p1Alive && p2Alive) {
+        this.physics.pause();
+    }
 }
 
 function generatePlayer(g, pos, creatureName){
@@ -322,24 +339,9 @@ function inHitArea(creature, target)
     return false;
 }
 
-function createBomb(pos)
+function createBomb()
 {
-    var overPlayer= true;
-    while(overPlayer)
-    {
-        overPlayer = false;
-        var x = Phaser.Math.Between(0, 800);
-        for(let i in pos)
-        {
-            if(pos[i] < x + 30 && pos[i] > x -30)
-            {
-                overPlayer = true;
-                break;
-            }
-        }
-    }
-
-    var bomb = bombs.create(x, 16, key= 'scene',frame= 'bomb.png');
+    var bomb = bombs.create(400, 16, key= 'scene',frame= 'bomb.png');
 
     bomb.setBounce(1);
     bomb.setCollideWorldBounds(true);
