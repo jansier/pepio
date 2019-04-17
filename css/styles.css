@@ -19,3 +19,12 @@ body {
 #messages{
     display: none;
 }
+#game{
+    width: 800px;
+}
+#join-game{
+    color: white;
+    text-align: center;
+    margin-top: 200px;
+    font-size: 32px;
+}
