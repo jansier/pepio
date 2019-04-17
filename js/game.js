@@ -85,8 +85,7 @@ function create ()
         p2left: 'a',
         p2right: 'd',
         p2attack: 'space',
-        restart: 'tab',
-        stars: 'p'
+        restart: 'tab'
     });
     
     stars = this.physics.add.group({
@@ -125,16 +124,6 @@ function update ()
 {
     if(cursors.restart.isDown) {
        this.scene.restart();
-    }
-    if(cursors.stars.isDown) {
-        stars.children.iterate(function (child) {
-            child.enableBody(true, child.x, 0, true, true);
-        });
-
-        p1Alive = true;
-        p2Alive = true;
-        player.setTint(0xffffff);
-        player2.setTint(0xffffff);
     }
 
     if ($("textarea").is(":focus")) {
