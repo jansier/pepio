@@ -29,6 +29,8 @@ var p1LastHit = new Date();
 var p2LastHit = new Date();
 var p1Alive = true;
 var p2Alive = true;
+var scoreSend = false;
+
 var createConfig = {
     'rengar' : {
         name: 'rengar',
@@ -48,7 +50,6 @@ var createConfig = {
     }
 
 }
-
 
 function preload ()
 {
@@ -87,8 +88,8 @@ function create ()
         restart: 'tab',
         p1InVis: 'alt'
     });
-
-        stars = this.physics.add.group({
+    
+    stars = this.physics.add.group({
         key: 'scene',
         frame: 'star.png',
         repeat: 39,
@@ -110,12 +111,13 @@ function create ()
     this.physics.add.collider(player2, player);
     this.physics.add.collider(stars, platforms);
     this.physics.add.collider(bombs, platforms);
-    
 
     this.physics.add.overlap(player, stars, collectStar, null, this);
     this.physics.add.collider(player, bombs, hitBomb, null, this);
     this.physics.add.overlap(player2, stars, collectStar, null, this);
     this.physics.add.collider(player2, bombs, hitBomb, null, this);
+
+    scoreSend = false;
 }
 
 
@@ -157,8 +159,7 @@ function collectStar (p, star)
     if (stars.countActive(true) == 0)
     {
         stars.children.iterate(function (child) {
-
-         child.enableBody(true, child.x, 0, true, true);
+            child.enableBody(true, child.x, 0, true, true);
         });
 
         p1Alive = true;
@@ -185,15 +186,18 @@ function hitBomb (p, bomb)
     }
 
     gameOver = true;
-            
-    window.socket.emit('data', {
-        action: 'gameOver',
-        name: window.playerName,
-        score: scorep1+scorep2
-    })
-    newScore(window.playerName, scorep1+scorep2);
-    
-    if(!p1Alive && !p2Alive) {
+        
+    if (!scoreSend) {
+        window.socket.emit('data', {
+            action: 'gameOver',
+            name: window.playerName,
+            score: scorep1+scorep2
+        })
+        newScore(window.playerName, scorep1+scorep2);
+        scoreSend = true;
+    }
+
+    if(!p1Alive && p2Alive) {
         this.physics.pause();
     }
 }
