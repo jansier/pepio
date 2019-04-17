@@ -71,7 +71,6 @@ function create ()
     platforms.create(W/3*2, H*2/3+10, key='scene', frame='plat2.png');
     platforms.create(W/20, H*5/7, key='scene', frame='plat2.png');
     
-    
     player = generatePlayer(this, {w : W/4*3, h : H/2}, p2);
     player2 = generatePlayer(this, {w : W/4, h : H/2}, p1);
 
@@ -160,17 +159,9 @@ function update ()
 
             child.enableBody(true, child.x, 0, true, true);
 
-        });
+        })
 
-        var x = (p.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0,     400);
-
-        var bomb = bombs.create(x, 16, key= 'scene',frame= 'bomb.png');
-
-        bomb.setBounce(1);
-        bomb.setCollideWorldBounds(true);
-        bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
-        bomb.allowGravity = !false;
-
+        createBomb([player.x, player2.x]);
     }
 }
 
@@ -322,6 +313,31 @@ function inHitArea(creature, target)
         }
     }
     return false;
+}
+
+function createBomb(pos)
+{
+    var overPlayer= true;
+    while(overPlayer)
+    {
+        overPlayer = false;
+        var x = Phaser.Math.Between(0, 800);
+        for(let i in pos)
+        {
+            if(pos[i] < x + 30 && pos[i] > x -30)
+            {
+                overPlayer = true;
+                break;
+            }
+        }
+    }
+
+    var bomb = bombs.create(x, 16, key= 'scene',frame= 'bomb.png');
+
+    bomb.setBounce(1);
+    bomb.setCollideWorldBounds(true);
+    bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
+    bomb.allowGravity = !false;
 }
 
 function runGame() {
