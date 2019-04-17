@@ -21,11 +21,17 @@
                 </div>
                 <div id="chat">                    
                     <div class="container">
-                        <input type="text" id="nickname" placeholder="Twoje imię" />
-                        <input type ="color" id = "color" />
-                        <div id="msgs"></div>
-                        <textarea placeholder="Napisz swoją wiadomość" id = "msg"></textarea>
-                        <button id="send" onclick="sendMsg()">Wyślij</button>
+                        <div id="name-form">
+                            Aby dołączyć do gry podaj swoje imię i podaj kolor.
+                            <input type="text" id="nickname" placeholder="Twoje imię" />
+                            <input type ="color" id = "color" />
+                            <button id="send" onclick="joinGame()">Dołącz do gry</button>
+                        </div>
+                        <div id="messages">
+                            <div id="msgs"></div>
+                            <textarea placeholder="Napisz swoją wiadomość" id = "msg"></textarea>
+                            <button id="send" onclick="sendMsg()">Wyślij</button>
+                        </div>    
                     </div>
                 </div>
             </div>

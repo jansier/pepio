@@ -60,7 +60,6 @@ function sendMsg() {
     })
 
     newMsg(name, msg, true, color);
-    runGame();
 }
 
 function randomColor() {
@@ -75,4 +74,15 @@ function createPix(x, y, color) {
         background: ${color}"></div>`
 
     $('body').append(html);
+}
+function joinGame() {
+    var name = $('#nickname').val();
+    if (!name) {
+        alert('Hey you forgot your name.');
+        return;
+    }
+    runGame();
+    $( "#name-form" ).remove();
+    	
+    $( "#messages" ).show();
 }

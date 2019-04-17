@@ -14,4 +14,8 @@ body {
     width: 250px;
     height: 600px;
     vertical-align: top;
+    padding: 5px;
+}
+#messages{
+    display: none;
 }
