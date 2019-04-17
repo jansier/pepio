@@ -34,14 +34,16 @@ var createConfig = {
         flip: 1,
         hitFramesCount: 4,
         speed: 300,
-        hitBombs: false
+        hitBombs: false,
+        jump: 400
     },
     'hulk' : {
         name: 'hulk',
         flip: 0,
         hitFramesCount: 1,
         speed: 150,
-        hitBombs: true
+        hitBombs: true,
+        jump: 330
     }
 
 }
@@ -295,12 +297,12 @@ function handleEvents (p, creatureConfig, left, right, up, attack){
     
     if (up && p.body.touching.down)
     {
-        p.setVelocityY(-330);
+        p.setVelocityY(-creatureConfig.jump);
         jumped = false;
     }
     else if (up && !jumped && Math.abs(p.body.velocity.y) < 100)
     {
-        p.setVelocityY(-330);
+        p.setVelocityY(-creatureConfig.jump);
         jumped = !false;
     }
 }
