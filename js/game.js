@@ -34,14 +34,16 @@ var createConfig = {
         flip: 1,
         hitFramesCount: 4,
         speed: 300,
-        hitBombs: false
+        hitBombs: false,
+        jump: 400
     },
     'hulk' : {
         name: 'hulk',
         flip: 0,
         hitFramesCount: 1,
         speed: 150,
-        hitBombs: true
+        hitBombs: true,
+        jump: 330
     }
 
 }
@@ -81,7 +83,7 @@ function create ()
         p2left: 'a',
         p2right: 'd',
         p2attack: 'space',
-        restart: 'shift'
+        restart: 'tab'
     });
     
     
@@ -286,12 +288,12 @@ function handleEvents (p, creatureConfig, left, right, up, attack){
     
     if (up && p.body.touching.down)
     {
-        p.setVelocityY(-330);
+        p.setVelocityY(-creatureConfig.jump);
         jumped = false;
     }
     else if (up && !jumped && Math.abs(p.body.velocity.y) < 100)
     {
-        p.setVelocityY(-330);
+        p.setVelocityY(-creatureConfig.jump);
         jumped = !false;
     }
 }
@@ -333,5 +335,6 @@ function createBomb(pos)
     bomb.allowGravity = !false;
 }
 
-
-var game = new Phaser.Game(config);
+function runGame() {
+    var game = new Phaser.Game(config);
+}

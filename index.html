@@ -14,16 +14,36 @@
     <body>
         <div id="container">
             <div id="game">
+                <div id="join-game">
+                    <i>Wpisz swoje imię po prawej stronie aby rozpocząć grę</i>
+                </div>
             </div>
             <div id="rightpanel">
                 <div id="scoreboard">
-                    tutaj będzie tablica wyników
+                    <!-- tutaj będzie tablica wyników -->
                 </div>
-                <div id="chat">
-                    tutaj będzie chat
+                <div id="chat">                    
+                    <div class="container">
+                        <div id="name-form">
+                            Aby dołączyć do gry podaj swoje imię i podaj kolor.<br />
+                            <input type="text" id="nickname" placeholder="Twoje imię" />
+                            <input type ="color" id="color" value="#FFFFFF"/>
+                            <button id="join-button" onclick="joinGame()">Dołącz do gry</button>
+                        </div>
+                        <div id="messages">
+                            <div id="welcome">Witaj, imie</div>
+                            <div id="msgs"></div>
+                            <textarea placeholder="Napisz swoją wiadomość" id = "msg"></textarea>
+                            <button id="send" onclick="sendMsg()">Wyślij</button>
+                        </div>    
+                    </div>
                 </div>
             </div>
         </div>   
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.slim.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>  
+        <script src="js/functions.js"></script>
+        <script src="js/script.js"></script>
         <script type="text/javascript" src="js/game.js"></script>     
     </body>
 </html>

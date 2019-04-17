@@ -2,7 +2,7 @@ body {
     background:black;
 }
 #container{
-    width: 1000px;
+    width: 1100px;
     margin: 0 auto;
 }
 #game, #rightpanel{
@@ -10,5 +10,47 @@ body {
 
 }
 #rightpanel{
-    background: red;
+    width: 250px;
+    height: 590px;
+    vertical-align: top;
+    padding: 5px;   
+    background: #393939;
+    border-radius: 5px;
+}
+#messages{
+    display: none;
+}
+#game{
+    width: 800px;
+}
+#join-game{
+    color: white;
+    text-align: center;
+    margin-top: 200px;
+    font-size: 32px;
+}
+.msg {
+    color: black;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+}
+.msg p, .msg h6 {
+    margin: 1px;
+}
+#msgs {
+    height: 500px;
+    overflow-y: scroll;
+}
+textarea, #send {
+    height: 50px;
+    vertical-align: middle;
+}
+#name-form, #welcome {
+    color: white;
+    margin-bottom: 10px;
+}
+#join-button {
+    width: 100%;
+
 }
