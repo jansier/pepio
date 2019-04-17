@@ -30,3 +30,10 @@ $('#msg').keyup(function(event) {
         sendMsg();
     }
 })
+$(document).click(function(event) { 
+    $target = $(event.target);
+    console.log($target.closest('#msg'))
+    if(!$target.closest('#msg').length) {
+        $('#msg').blur();
+    }
+});
