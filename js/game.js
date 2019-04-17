@@ -317,5 +317,6 @@ function inHitArea(creature, target)
     return false;
 }
 
-
-var game = new Phaser.Game(config);
+function runGame() {
+    var game = new Phaser.Game(config);
+}

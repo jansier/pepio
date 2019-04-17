@@ -2,7 +2,7 @@ body {
     background:black;
 }
 #container{
-    width: 1000px;
+    width: 1100px;
     margin: 0 auto;
 }
 #game, #rightpanel{
@@ -11,4 +11,7 @@ body {
 }
 #rightpanel{
     background: red;
+    width: 250px;
+    height: 600px;
+    vertical-align: top;
 }
