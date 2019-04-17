@@ -67,17 +67,10 @@ function joinGame() {
         return;
     }
     runGame();
-<<<<<<< HEAD
-    $( "#name-form" ).hide();
-    	
-    $( "#messages" ).show();
-    
-=======
     $( "#welcome" ).html("Witaj " + name + "");
     $( "#name-form" ).hide();
     	
     $( "#messages" ).show();
 
->>>>>>> 9c6cad158700ae00c2bbc59650e1d602dd9f9451
     $( "#join-game" ).remove();
 }
