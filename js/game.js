@@ -131,8 +131,14 @@ function update ()
         return;
     }
 
+    if ($("textarea").is(":focus")) {
+        this.input.keyboard.enabled = false;
+    } else {
+        this.input.keyboard.enabled = true;
+    }
     handleEvents(player, createConfig[p1], cursors.p1left.isDown, cursors.p1right.isDown, cursors.p1up.isDown, cursors.p1attack.isDown)
     handleEvents(player2, createConfig[p2], cursors.p2left.isDown, cursors.p2right.isDown, cursors.p2up.isDown, cursors.p2attack.isDown)
+    
 }
 
  function collectStar (p, star)
@@ -227,7 +233,6 @@ function generatePlayer(g, pos, creatureName){
 }
 
 function handleEvents (p, creatureConfig, left, right, up, attack){
-
     if (left)
     {
         p.setVelocityX(-creatureConfig.speed);

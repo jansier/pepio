@@ -51,6 +51,7 @@ function sendMsg() {
     }
 
     $('#msg').val('');
+    $('#msg').blur();
 
     window.socket.emit('data', {
         action: 'message',
